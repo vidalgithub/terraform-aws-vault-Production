@@ -69,7 +69,7 @@ module "vault_cluster" {
   user_data = data.template_file.user_data_vault_cluster.rendered
 
   vpc_id     = data.aws_vpc.default.id
-  subnet_ids = data.aws_subnet_ids.default.ids
+  subnet_ids = data.aws_subnets.default.ids
 
   # Do NOT use the ELB for the ASG health check, or the ASG will assume all sealed instances are unhealthy and
   # repeatedly try to redeploy them.
@@ -142,7 +142,7 @@ module "vault_elb" {
   name = var.vault_cluster_name
 
   vpc_id     = data.aws_vpc.default.id
-  subnet_ids = data.aws_subnet_ids.default.ids
+  subnet_ids = data.aws_subnets.default.ids
 
   # Associate the ELB with the instances created by the Vault Autoscaling group
   vault_asg_name = module.vault_cluster.asg_name
